@@ -251,6 +251,7 @@ const QRCodeGenerator: React.FC = () => {
         const baseUrl = window.location.origin;
         const params = new URLSearchParams();
         params.append('url', qrData.mapsData.url);
+        params.append('lang', lang); // Add language parameter
         if (qrData.mapsData.title) {
           params.append('title', qrData.mapsData.title);
         }

@@ -112,27 +112,44 @@
     
     <div class="content">
         <a href="#" class="button-item" id="mapBtn">
-            <span class="button-text">Giữ dạng ở đây</span>
+            <span class="button-text">Địa điểm đến</span>
             <span class="arrow">→</span>
         </a>
         
         <a href="#" class="button-item hidden" id="noteBtn">
-            <span class="button-text" id="noteText">Ghi chú: 14h hẹn gặp tại...</span>
+            <span class="button-text" id="noteText">Ghi chú: </span>
             <span class="arrow">→</span>
         </a>
     </div>
 
     <script>
+        // Translations
+        const translations = {
+            vi: {
+                location: 'Địa điểm đến'
+            },
+            en: {
+                location: 'Location'
+            }
+        };
+        
         // Parse URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const mapUrl = urlParams.get('url');
         const title = urlParams.get('title');
         const note = urlParams.get('note');
+        const lang = urlParams.get('lang') || 'vi'; // Default to Vietnamese
+        
+        // Get translations
+        const t = translations[lang] || translations.vi;
         
         // Set main title
         if (title && title.trim()) {
             document.getElementById('mainTitle').textContent = decodeURIComponent(title);
         }
+        
+        // Set map button text with translation
+        document.querySelector('#mapBtn .button-text').textContent = t.location;
         
         // Set map button link
         if (mapUrl) {
