@@ -1,0 +1,35 @@
+========================================
+   HƯỚNG DẪN CHẠY ỨNG DỤNG NGAY
+========================================
+
+BƯỚC 1: Cài đặt thư viện
+-------------------------
+Mở terminal/command prompt tại thư mục này và chạy:
+
+    npm install
+
+(Đợi vài phút để tải và cài đặt...)
+
+
+BƯỚC 2: Chạy ứng dụng
+---------------------
+Chọn một trong hai cách:
+
+A. Chạy với HTTP (nhanh, đơn giản):
+    npm run dev
+    → Mở: http://localhost:3000
+
+B. Chạy với HTTPS (bảo mật):
+    npm run dev:https
+    → Mở: https://localhost:3000
+    (Lần đầu sẽ tự động tạo certificate)
+
+
+========================================
+LƯU Ý:
+- Cần có Node.js (tải tại: https://nodejs.org/)
+- HTTP: Dùng cho dev nhanh
+- HTTPS: Dùng khi cần test tính năng bảo mật
+- Xem HUONG_DAN.md hoặc SETUP_HTTPS.md chi tiết
+========================================
+
