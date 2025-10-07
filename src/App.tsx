@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Download, Globe, Languages, Palette, Settings, BarChart3 } from 'lucide-react';
+import { Download, Globe, Palette, Settings, BarChart3 } from 'lucide-react';
 import QRCode from 'qrcode';
 
 // Types
