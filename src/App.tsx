@@ -9,6 +9,11 @@ type Language = 'vi' | 'en';
 interface QRData {
   type: QRType;
   content: string;
+  mapsData?: {
+    url: string;
+    title: string;
+    note: string;
+  };
   vcardData?: {
     name: string;
     jobTitle: string;
@@ -52,7 +57,9 @@ const translations = {
     wifiConfig: 'Cấu hình WiFi',
     enterUrl: 'Nhập đường dẫn website',
     enterPhone: 'Nhập số điện thoại',
-    enterLocation: 'Nhập link Google Maps',
+    mapsTitle: 'Tiêu đề',
+    enterLocation: 'Link Google Maps',
+    mapsNote: 'Ghi chú',
     customization: 'Tùy chỉnh giao diện',
     foregroundColor: 'Màu mã QR',
     backgroundColor: 'Màu nền',
@@ -98,7 +105,9 @@ const translations = {
     wifiConfig: 'WiFi Configuration',
     enterUrl: 'Enter website URL',
     enterPhone: 'Enter phone number',
-    enterLocation: 'Enter Google Maps link',
+    mapsTitle: 'Title',
+    enterLocation: 'Google Maps link',
+    mapsNote: 'Note',
     customization: 'Appearance Customization',
     foregroundColor: 'QR Code Color',
     backgroundColor: 'Background Color',
@@ -138,6 +147,11 @@ const QRCodeGenerator: React.FC = () => {
   const [qrData, setQRData] = useState<QRData>({
     type: 'url',
     content: '',
+    mapsData: {
+      url: '',
+      title: '',
+      note: '',
+    },
     vcardData: {
       name: '',
       jobTitle: '',
@@ -176,6 +190,11 @@ const QRCodeGenerator: React.FC = () => {
     setQRData({
       type: 'url',
       content: '',
+      mapsData: {
+        url: '',
+        title: '',
+        note: '',
+      },
       vcardData: {
         name: '',
         jobTitle: '',
@@ -227,8 +246,18 @@ const QRCodeGenerator: React.FC = () => {
         dataToEncode = `tel:${qrData.content}`;
         break;
       case 'maps':
-        if (!qrData.content) return;
-        dataToEncode = qrData.content;
+        if (!qrData.mapsData?.url) return;
+        // Create landing page URL with query parameters
+        const baseUrl = window.location.origin;
+        const params = new URLSearchParams();
+        params.append('url', qrData.mapsData.url);
+        if (qrData.mapsData.title) {
+          params.append('title', qrData.mapsData.title);
+        }
+        if (qrData.mapsData.note) {
+          params.append('note', qrData.mapsData.note);
+        }
+        dataToEncode = `${baseUrl}/map-landing.html?${params.toString()}`;
         break;
       case 'vcard':
         if (!qrData.vcardData?.name) return;
@@ -522,13 +551,38 @@ const QRCodeGenerator: React.FC = () => {
                 )}
 
                 {qrData.type === 'maps' && (
-                  <input
-                    type="text"
-                    value={qrData.content}
-                    onChange={(e) => setQRData({ ...qrData, content: e.target.value })}
-                    placeholder={t.enterLocation}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
-                  />
+                  <div className="space-y-3">
+                    <input
+                      type="text"
+                      value={qrData.mapsData?.title || ''}
+                      onChange={(e) => setQRData({
+                        ...qrData,
+                        mapsData: { ...qrData.mapsData!, title: e.target.value }
+                      })}
+                      placeholder={t.mapsTitle}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="text"
+                      value={qrData.mapsData?.url || ''}
+                      onChange={(e) => setQRData({
+                        ...qrData,
+                        mapsData: { ...qrData.mapsData!, url: e.target.value }
+                      })}
+                      placeholder={t.enterLocation}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500"
+                    />
+                    <textarea
+                      value={qrData.mapsData?.note || ''}
+                      onChange={(e) => setQRData({
+                        ...qrData,
+                        mapsData: { ...qrData.mapsData!, note: e.target.value }
+                      })}
+                      placeholder={t.mapsNote}
+                      rows={2}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 resize-none"
+                    />
+                  </div>
                 )}
 
                 {qrData.type === 'vcard' && (
