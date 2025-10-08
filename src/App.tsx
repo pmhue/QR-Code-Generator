@@ -356,8 +356,10 @@ const QRCodeGenerator: React.FC = () => {
           const logoImg = new Image();
           logoImg.onload = () => {
             const logoSizePixels = (400 * qrStyle.logoSize) / 100;
-            const logoX = (canvas.width - logoSizePixels) / 2;
-            const logoY = (canvas.height - logoSizePixels) / 2;
+            // Calculate position relative to QR code area (400x400), not full canvas
+            const qrCodeSize = 400;
+            const logoX = padding + (qrCodeSize - logoSizePixels) / 2;
+            const logoY = padding + (qrCodeSize - logoSizePixels) / 2;
             
             // White background for logo with shadow
             ctx.save();
@@ -367,6 +369,7 @@ const QRCodeGenerator: React.FC = () => {
             ctx.fillRect(logoX - 8, logoY - 8, logoSizePixels + 16, logoSizePixels + 16);
             ctx.restore();
             
+            // Draw logo without rotation, properly centered
             ctx.drawImage(logoImg, logoX, logoY, logoSizePixels, logoSizePixels);
           };
           logoImg.src = logo;
