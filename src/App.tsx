@@ -263,8 +263,10 @@ const QRCodeGenerator: React.FC = () => {
       case 'vcard':
         if (!qrData.vcardData?.name) return;
         // VCard 3.0 International Standard (RFC 2426)
-        // Ensures maximum compatibility across all devices
-        dataToEncode = `BEGIN:VCARD\nVERSION:3.0\nFN:${qrData.vcardData.name}\nTITLE:${qrData.vcardData.jobTitle}\nTEL:${qrData.vcardData.phone}\nEMAIL:${qrData.vcardData.email}\nORG:${qrData.vcardData.organization}\nEND:VCARD`;
+        // N field (Name structure): Last;First;Middle;Prefix;Suffix
+        // FN field (Formatted Name): Display name
+        // This ensures the name displays correctly in phone contacts
+        dataToEncode = `BEGIN:VCARD\nVERSION:3.0\nN:${qrData.vcardData.name};;;;\nFN:${qrData.vcardData.name}\nTITLE:${qrData.vcardData.jobTitle}\nTEL:${qrData.vcardData.phone}\nEMAIL:${qrData.vcardData.email}\nORG:${qrData.vcardData.organization}\nEND:VCARD`;
         break;
       case 'wifi':
         if (!qrData.wifiData?.ssid) return;
