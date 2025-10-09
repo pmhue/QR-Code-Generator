@@ -89,7 +89,7 @@ const translations = {
     password: 'Mật khẩu',
     encryption: 'Mã hóa',
     createdBy: 'Được tạo bởi',
-    internalUse: 'Chỉ sử dụng nội bộ Cty HLHV',
+    internalUse: 'Chỉ sử dụng cho mục đích cá nhân',
     allRightsReserved: 'All rights reserved',
   },
   en: {
@@ -137,7 +137,7 @@ const translations = {
     password: 'Password',
     encryption: 'Encryption',
     createdBy: 'Created by',
-    internalUse: 'For internal use of HLHV Company only',
+    internalUse: 'For free personal use only',
     allRightsReserved: 'All rights reserved',
   },
 };
@@ -881,14 +881,14 @@ const QRCodeGenerator: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center space-y-2">
             <p className="text-gray-700 font-medium">
-              {t.createdBy} <span className="text-blue-600 font-bold">Cty HLHV</span>
+              {t.createdBy} <span className="text-blue-600 font-bold">Phan Minh Hue</span>
             </p>
             <p className="text-sm text-gray-500">
               {t.internalUse}
             </p>
             <div className="pt-4 border-t border-gray-100 mt-4">
               <p className="text-xs text-gray-400">
-                © {new Date().getFullYear()} HLHV Company. {t.allRightsReserved}.
+                © {new Date().getFullYear()} Phan Minh Hue. {t.allRightsReserved}.
               </p>
             </div>
           </div>
